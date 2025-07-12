@@ -1,0 +1,22 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="40" rx="8" fill="#1e40af"/>
+  
+  <!-- Stack Icon -->
+  <g transform="translate(8, 8)">
+    <!-- Stack of papers/cards -->
+    <rect x="2" y="6" width="16" height="2" rx="1" fill="#ffffff" opacity="0.6"/>
+    <rect x="2" y="10" width="16" height="2" rx="1" fill="#ffffff" opacity="0.8"/>
+    <rect x="2" y="14" width="16" height="2" rx="1" fill="#ffffff"/>
+    <rect x="2" y="18" width="16" height="2" rx="1" fill="#ffffff"/>
+    
+    <!-- Question mark -->
+    <circle cx="21" cy="12" r="10" fill="#ffffff" opacity="0.1"/>
+    <path d="M19 9c0-1.1 0.9-2 2-2s2 0.9 2 2c0 2-2 2-2 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="21" cy="17" r="0.5" fill="#ffffff"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="45" y="16" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff">StackIt</text>
+  <text x="45" y="28" font-family="Arial, sans-serif" font-size="8" fill="#ffffff" opacity="0.8">Q&A Platform</text>
+</svg>
