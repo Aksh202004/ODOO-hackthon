@@ -10,4 +10,4 @@ team members:
 Aakash
 Yash 
 Vansh
-Dushyant
+dushyant
