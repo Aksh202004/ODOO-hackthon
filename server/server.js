@@ -36,6 +36,7 @@ app.use('/api/answers', require('./routes/answers'));
 app.use('/api/votes', require('./routes/votes'));
 app.use('/api/tags', require('./routes/tags'));
 app.use('/api/notifications', require('./routes/notifications'));
+app.use('/api/seed', require('./routes/seed'));
 
 // Health check
 app.get('/api/health', (req, res) => {

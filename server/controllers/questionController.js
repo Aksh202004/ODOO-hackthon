@@ -41,15 +41,19 @@ const getQuestions = async (req, res) => {
       .populate('author', 'username avatar reputation')
       .populate('tags', 'name color')
       .populate('acceptedAnswer', 'author')
+      .select('_id title description author tags votes answers createdAt views')
       .sort(sort)
       .limit(parseInt(limit))
       .skip(skip);
 
     const total = await Question.countDocuments(query);
 
+    // Manually convert to JSON to include virtuals
+    const questionsWithVirtuals = questions.map(q => q.toJSON({ virtuals: true }));
+
     res.json({
       success: true,
-      questions,
+      questions: questionsWithVirtuals,
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -97,7 +101,7 @@ const getQuestion = async (req, res) => {
 
     res.json({
       success: true,
-      question
+      question: question.toJSON({ virtuals: true })
     });
   } catch (error) {
     console.error('Get question error:', error);
@@ -113,25 +117,7 @@ const getQuestion = async (req, res) => {
 // @access  Private
 const createQuestion = async (req, res) => {
   try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        errors: errors.array()
-      });
-    }
-
     const { title, description, tags } = req.body;
-
-    // Validate and get tag IDs
-    const tagObjects = await Tag.find({ _id: { $in: tags } });
-    if (tagObjects.length !== tags.length) {
-      return res.status(400).json({
-        success: false,
-        message: 'One or more tags are invalid'
-      });
-    }
 
     const question = new Question({
       title,
@@ -141,21 +127,6 @@ const createQuestion = async (req, res) => {
     });
 
     await question.save();
-
-    // Update user's questions asked
-    await User.findByIdAndUpdate(req.user.id, {
-      $push: { questionsAsked: question._id }
-    });
-
-    // Update tag question counts
-    await Tag.updateMany(
-      { _id: { $in: tags } },
-      { $inc: { questionCount: 1 } }
-    );
-
-    // Populate the created question
-    await question.populate('author', 'username avatar reputation');
-    await question.populate('tags', 'name color');
 
     res.status(201).json({
       success: true,
@@ -276,10 +247,36 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+// @desc    Get hot questions
+// @route   GET /api/questions/hot
+// @access  Public
+const getHotQuestions = async (req, res) => {
+  try {
+    const { limit = 5 } = req.query;
+
+    const questions = await Question.find({ isActive: true })
+      .sort({ votes: -1 })
+      .limit(parseInt(limit))
+      .select('title');
+
+    res.json({
+      success: true,
+      questions
+    });
+  } catch (error) {
+    console.error('Get hot questions error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error'
+    });
+  }
+};
+
 module.exports = {
   getQuestions,
   getQuestion,
   createQuestion,
   updateQuestion,
-  deleteQuestion
+  deleteQuestion,
+  getHotQuestions
 };

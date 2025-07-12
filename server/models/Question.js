@@ -31,18 +31,24 @@ const questionSchema = new mongoose.Schema({
     default: null
   },
   votes: {
-    upvotes: [{
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      }
-    }],
-    downvotes: [{
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      }
-    }]
+    upvotes: {
+      type: [{
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      }],
+      default: []
+    },
+    downvotes: {
+      type: [{
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      }],
+      default: []
+    }
   },
   views: {
     type: Number,

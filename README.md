@@ -2,7 +2,7 @@
 Odoo hackathon project repo
 
 
-Team name:aksh202004
+Team name:Team 1197
 
 team leaders email:aksh202004@gmail.com
 
