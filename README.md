@@ -1,7 +1,7 @@
-### SynapseQ ('Synapse' refers to a connection point, suggesting the linking of ideas and questions)
+# SynapseQ ('Synapse' refers to a connection point, suggesting the linking of ideas and questions)
 ## A question-and-answer platform.
 
-# ODOO-hackthon
+### ODOO-hackthon
 Odoo hackathon project repo
 
 
